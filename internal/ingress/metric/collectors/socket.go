@@ -131,6 +131,7 @@ func NewSocketCollector(pod, namespace, class string) (*SocketCollector, error) 
 				Help:        "The response length (including request line, header, and request body)",
 				Namespace:   PrometheusNamespace,
 				ConstLabels: constLabels,
+				// TODO: correct buckets
 			},
 			requestTags,
 		),
@@ -151,6 +152,7 @@ func NewSocketCollector(pod, namespace, class string) (*SocketCollector, error) 
 				Namespace:   PrometheusNamespace,
 				Buckets:     prometheus.LinearBuckets(10, 10, 10), // 10 buckets, each 10 bytes wide.
 				ConstLabels: constLabels,
+				// TODO: correct buckets
 			},
 			requestTags,
 		),
@@ -165,7 +167,8 @@ func NewSocketCollector(pod, namespace, class string) (*SocketCollector, error) 
 			[]string{"ingress", "namespace", "status"},
 		),
 
-		bytesSent: prometheus.NewHistogramVec(
+
+			bytesSent: prometheus.NewHistogramVec(
 			prometheus.HistogramOpts{
 				Name:        "bytes_sent",
 				Help:        "The number of bytes sent to a client",
